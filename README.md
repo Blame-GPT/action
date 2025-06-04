@@ -8,7 +8,7 @@
 - uses: blamegpt/action@v1
   with:
     command: 'blame'
-    issue_id: '123'
+    issue_id: ${{ github.event.issue.number }}
     blamegpt_api_key: ${{ secrets.BLAMEGPT_API_KEY }}
 ```
 
