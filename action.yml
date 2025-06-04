@@ -10,6 +10,14 @@ inputs:
   blamegpt_api_key:
     description: 'BlameGPT API key'
     required: true
+
 runs:
-  using: 'node20'
-  main: 'dist/index.js'
+  using: 'composite'
+  steps:
+    - name: Run BlameGPT
+      run: |
+        node dist/index.js \
+          --command "${{ inputs.command }}" \
+          --issue_id "${{ inputs.issue_id }}" \
+          --blamegpt_api_key "${{ inputs.blamegpt_api_key }}"
+      shell: bash
