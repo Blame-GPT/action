@@ -1,3 +1,17 @@
+## How to install? 
+
+```yaml
+- uses: actions/setup-node@v4
+  with:
+    node-version: '20' # or any
+
+- uses: blamegpt/action@v1
+  with:
+    command: 'blame'
+    issue_id: '123'
+    blamegpt_api_key: ${{ secrets.BLAMEGPT_API_KEY }}
+```
+
 ## Why is my shiny new feature not on production yet?
 
 Oh... we have deploy blockers!!
