@@ -9,4 +9,5 @@ This tool finds the pull requests begging to be reverted so you can go back to s
 
 
 ## Finding the PR causing a deploy blocker
-<img src="https://github.com/user-attachments/assets/c049bc22-b194-45ef-b2c7-1e58bd6a999b" height=500>
+<img src="https://github.com/user-attachments/assets/213890a8-9575-4fb8-82df-5a130e53880b" height=500>
+
