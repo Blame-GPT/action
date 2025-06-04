@@ -1,5 +1,7 @@
 name: 'BlameGPT'
 description: 'Identify the culprit PR for a deploy blocker'
+icon: 'check-circle'
+color: 'purple'
 inputs:
   command:
     description: 'Command to run ["blame"]'
