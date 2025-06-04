@@ -1,0 +1,15 @@
+name: 'BlameGPT'
+description: 'Identify the culprit PR for a deploy blocker'
+inputs:
+  command:
+    description: 'Command to run ["blame"]'
+    required: true
+  issue_id:
+    description: 'GitHub issue number to find the culprit PR for.'
+    required: true
+  blamegpt_api_key:
+    description: 'BlameGPT API key'
+    required: true
+runs:
+  using: 'node20'
+  main: 'dist/index.js'

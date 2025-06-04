@@ -1,0 +1,23 @@
+{
+  "name": "blamegpt",
+  "version": "1.0.0",
+  "description": "BlameGPT finds the PR causing a deploy blocker so you can go back to shipping.",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "author": "Rushat Gabhane",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BlameGPT/action.git"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^22.15.29",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "@actions/core": "^1.11.1",
+    "axios": "^1.9.0"
+  }
+}
