@@ -1,0 +1,28 @@
+name: Find culprit PR using BlameGPT 
+
+on:
+  issues:
+    types: [labeled]
+
+  workflow_dispatch:
+    inputs:
+      issue_id:
+        description: 'Issue number to get culprit PR for.'
+        required: true
+
+jobs:
+  run-blamegpt:
+    if: github.event_name == 'workflow_dispatch' || (github.event.label.name == 'DeployBlockerCash')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Run BlameGPT
+        uses: BlameGPT/action@v1
+        with:
+          command: blame
+          issue_id: ${{ github.event.issue.number || github.event.inputs.issue_id }}
+          blamegpt_api_key: ${{ secrets.BLAMEGPT_API_KEY }}
