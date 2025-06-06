@@ -4,7 +4,7 @@ import { COMMANDS_AVAILABLE } from './constants';
 
 async function run() {
   const command = core.getInput('command');
-  const issueId = core.getInput('issue');
+  const issueID = core.getInput('issue_id');
   const apiKey = core.getInput('blamegpt_api_key');
 
   if (!command) {
@@ -12,7 +12,7 @@ async function run() {
     return;
   }
 
-  if (!issueId) {
+  if (!issueID) {
     core.setFailed('Issue ID is required.');
     return;
   }
@@ -26,7 +26,7 @@ async function run() {
   try {
     switch (command) {
       case 'blame':
-        await runBlame(issueId, apiKey);
+        await runBlame(issueID, apiKey);
         break;
       default:
         core.setFailed(

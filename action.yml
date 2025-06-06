@@ -17,9 +17,9 @@ runs:
   using: 'composite'
   steps:
     - name: Run BlameGPT
-      run: |
-        node "${{ github.action_path }}/dist/index.js" \
-          --command "${{ inputs.command }}" \
-          --issue_id "${{ inputs.issue_id }}" \
-          --blamegpt_api_key "${{ inputs.blamegpt_api_key }}"
+      run: node "${{ github.action_path }}/dist/index.js"
       shell: bash
+      env:
+        INPUT_COMMAND: ${{ inputs.command }}
+        INPUT_ISSUE_ID: ${{ inputs.issue_id }}
+        INPUT_BLAMEGPT_API_KEY: ${{ inputs.blamegpt_api_key }}

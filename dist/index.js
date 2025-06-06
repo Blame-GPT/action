@@ -29190,13 +29190,13 @@ const blame_1 = __nccwpck_require__(1010);
 const constants_1 = __nccwpck_require__(7242);
 async function run() {
     const command = core.getInput('command');
-    const issueId = core.getInput('issue');
+    const issueID = core.getInput('issue_id');
     const apiKey = core.getInput('blamegpt_api_key');
     if (!command) {
         core.setFailed('Command is required.');
         return;
     }
-    if (!issueId) {
+    if (!issueID) {
         core.setFailed('Issue ID is required.');
         return;
     }
@@ -29208,7 +29208,7 @@ async function run() {
     try {
         switch (command) {
             case 'blame':
-                await (0, blame_1.runBlame)(issueId, apiKey);
+                await (0, blame_1.runBlame)(issueID, apiKey);
                 break;
             default:
                 core.setFailed(`Unsupported command: ${command}. The commands  available are: ${constants_1.COMMANDS_AVAILABLE.join(', ')}`);
