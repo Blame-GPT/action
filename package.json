@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "ncc build src/index.ts -o dist",
-    "tag": "git tag -f v1 && git push origin -f v1 && git push origin v$(node -p \"require('./package.json').version\")",
+    "tag": "git tag -f v1 && git tag v$(node -p \"require('./package.json').version\") || true && git push origin -f v1 && git push origin v$(node -p \"require('./package.json').version\")",
     "release:patch": "npm version patch && npm run tag"
   },
   "author": "Rushat Gabhane",
