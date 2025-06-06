@@ -29132,15 +29132,14 @@ async function runBlame(issueID, apiKey) {
     stream.on('data', (chunk) => {
         const lines = chunk.toString().split('\n');
         for (const line of lines) {
-            if (line.trim())
-                core.info(`[BlameGPT] ${line.trim()}`);
+            core.info(line);
         }
     });
     await new Promise((resolve, reject) => {
         stream.on('end', resolve);
         stream.on('error', reject);
     });
-    core.info('BlameGPT stream completed.');
+    core.info('stream completed.');
 }
 
 
@@ -29193,18 +29192,18 @@ async function run() {
     const issueID = core.getInput('issue_id');
     const apiKey = core.getInput('blamegpt_api_key');
     if (!command) {
-        core.setFailed('Command is required.');
+        core.setFailed('command is required.');
         return;
     }
     if (!issueID) {
-        core.setFailed('Issue ID is required.');
+        core.setFailed('issue_id is required.');
         return;
     }
     if (!apiKey) {
-        core.setFailed('BlameGPT API key is required.');
+        core.setFailed('blamegpt_api_key is required.');
         return;
     }
-    core.info(`Running BlameGPT command: ${command}`);
+    core.info(`Running command: ${command}`);
     try {
         switch (command) {
             case 'blame':

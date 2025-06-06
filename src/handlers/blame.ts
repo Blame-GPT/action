@@ -16,11 +16,10 @@ export async function runBlame(issueID: string, apiKey: string) {
   );
 
   const stream = response.data as NodeJS.ReadableStream;
-
   stream.on('data', (chunk: Buffer) => {
     const lines = chunk.toString().split('\n');
     for (const line of lines) {
-      if (line.trim()) core.info(`[BlameGPT] ${line.trim()}`);
+      core.info(line);
     }
   });
 
@@ -29,5 +28,5 @@ export async function runBlame(issueID: string, apiKey: string) {
     stream.on('error', reject);
   });
 
-  core.info('BlameGPT stream completed.');
+  core.info('stream completed.');
 }
