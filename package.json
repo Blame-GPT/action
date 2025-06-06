@@ -4,7 +4,9 @@
   "description": "GitHub Action to run BlameGPT on issues.",
   "main": "dist/index.js",
   "scripts": {
-    "build": "ncc build src/index.ts -o dist"
+    "build": "ncc build src/index.ts -o dist",
+    "tag": "git tag -f v1 && git push origin v1 && git push origin v$(node -p \"require('./package.json').version\")",
+    "release:patch": "npm version patch && npm run tag"
   },
   "author": "Rushat Gabhane",
   "repository": {
