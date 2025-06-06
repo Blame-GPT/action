@@ -1,10 +1,10 @@
 {
   "name": "blamegpt",
   "version": "1.0.0",
-  "description": "BlameGPT finds the PR causing a deploy blocker so you can go back to shipping.",
-  "main": "index.js",
+  "description": "GitHub Action to run BlameGPT on issues.",
+  "main": "dist/index.js",
   "scripts": {
-    "build": "tsc"
+    "build": "ncc build src/index.ts -o dist"
   },
   "author": "Rushat Gabhane",
   "repository": {
@@ -14,6 +14,7 @@
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^22.15.29",
+    "@vercel/ncc": "^0.38.3",
     "typescript": "^5.8.3"
   },
   "dependencies": {
