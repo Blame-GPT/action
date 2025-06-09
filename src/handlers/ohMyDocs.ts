@@ -1,11 +1,11 @@
 import axios from 'axios';
 import * as core from '@actions/core';
-import { BLAME_ENDPOINT } from '../constants';
+import { OHMYDOCS_ENDPOINT } from '../constants';
 
-export async function runBlame(issueID: string, apiKey: string) {
+export async function runOhMyDocs(pullRequestID: string, apiKey: string) {
   const response = await axios.post(
-    BLAME_ENDPOINT,
-    { issue_id: parseInt(issueID) },
+    OHMYDOCS_ENDPOINT,
+    { pull_request_id: parseInt(pullRequestID) },
     {
       responseType: 'stream',
       headers: {

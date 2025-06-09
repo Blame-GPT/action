@@ -29067,9 +29067,10 @@ module.exports = {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.COMMANDS_AVAILABLE = exports.BLAMEGPT_BLAME_ENDPOINT = void 0;
-exports.BLAMEGPT_BLAME_ENDPOINT = 'https://blamegpt.rushat.dev/api/blame';
-exports.COMMANDS_AVAILABLE = ['blame'];
+exports.COMMANDS_AVAILABLE = exports.OHMYDOCS_ENDPOINT = exports.BLAME_ENDPOINT = void 0;
+exports.BLAME_ENDPOINT = 'https://blamegpt.rushat.dev/api/blame';
+exports.OHMYDOCS_ENDPOINT = 'https://blamegpt.rushat.dev/api/ohmydocs';
+exports.COMMANDS_AVAILABLE = ['blame', 'ohmydocs'];
 
 
 /***/ }),
@@ -29121,7 +29122,78 @@ const axios_1 = __importDefault(__nccwpck_require__(7269));
 const core = __importStar(__nccwpck_require__(7484));
 const constants_1 = __nccwpck_require__(7242);
 async function runBlame(issueID, apiKey) {
-    const response = await axios_1.default.post(constants_1.BLAMEGPT_BLAME_ENDPOINT, { issue_id: parseInt(issueID) }, {
+    const response = await axios_1.default.post(constants_1.BLAME_ENDPOINT, { issue_id: parseInt(issueID) }, {
+        responseType: 'stream',
+        headers: {
+            Authorization: `Bearer ${apiKey}`,
+            'Content-Type': 'application/json',
+        },
+    });
+    const stream = response.data;
+    stream.on('data', (chunk) => {
+        const lines = chunk.toString().split('\n');
+        for (const line of lines) {
+            core.info(line);
+        }
+    });
+    await new Promise((resolve, reject) => {
+        stream.on('end', resolve);
+        stream.on('error', reject);
+    });
+    core.info('stream completed.');
+}
+
+
+/***/ }),
+
+/***/ 8047:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || (function () {
+    var ownKeys = function(o) {
+        ownKeys = Object.getOwnPropertyNames || function (o) {
+            var ar = [];
+            for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) ar[ar.length] = k;
+            return ar;
+        };
+        return ownKeys(o);
+    };
+    return function (mod) {
+        if (mod && mod.__esModule) return mod;
+        var result = {};
+        if (mod != null) for (var k = ownKeys(mod), i = 0; i < k.length; i++) if (k[i] !== "default") __createBinding(result, mod, k[i]);
+        __setModuleDefault(result, mod);
+        return result;
+    };
+})();
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.runOhMyDocs = runOhMyDocs;
+const axios_1 = __importDefault(__nccwpck_require__(7269));
+const core = __importStar(__nccwpck_require__(7484));
+const constants_1 = __nccwpck_require__(7242);
+async function runOhMyDocs(pullRequestID, apiKey) {
+    const response = await axios_1.default.post(constants_1.OHMYDOCS_ENDPOINT, { pull_request_id: parseInt(pullRequestID) }, {
         responseType: 'stream',
         headers: {
             Authorization: `Bearer ${apiKey}`,
@@ -29186,17 +29258,23 @@ var __importStar = (this && this.__importStar) || (function () {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(7484));
 const blame_1 = __nccwpck_require__(1010);
+const ohMyDocs_1 = __nccwpck_require__(8047);
 const constants_1 = __nccwpck_require__(7242);
 async function run() {
     const command = core.getInput('command');
     const issueID = core.getInput('issue_id');
+    const pullRequestID = core.getInput('pull_request_id');
     const apiKey = core.getInput('blamegpt_api_key');
     if (!command) {
         core.setFailed('command is required.');
         return;
     }
-    if (!issueID) {
-        core.setFailed('issue_id is required.');
+    if (command === 'ohmydocs' && !pullRequestID) {
+        core.setFailed('pull_request_id is required for ohmydocs command.');
+        return;
+    }
+    if (command === 'blame' && !issueID) {
+        core.setFailed('issue_id is required for blame command.');
         return;
     }
     if (!apiKey) {
@@ -29208,6 +29286,9 @@ async function run() {
         switch (command) {
             case 'blame':
                 await (0, blame_1.runBlame)(issueID, apiKey);
+                break;
+            case 'ohmydocs':
+                await (0, ohMyDocs_1.runOhMyDocs)(issueID, apiKey);
                 break;
             default:
                 core.setFailed(`Unsupported command: ${command}. The commands  available are: ${constants_1.COMMANDS_AVAILABLE.join(', ')}`);

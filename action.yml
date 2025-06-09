@@ -4,10 +4,12 @@ icon: 'check-circle'
 color: 'purple'
 inputs:
   command:
-    description: 'Command to run ["blame"]'
+    description: 'Command to run ["blame", "ohmydocs"]'
     required: true
   issue_id:
     description: 'GitHub issue number to find the culprit PR for.'
+  pull_request_id:
+    description: 'GitHub pull request number to find doc update for.'
     required: true
   blamegpt_api_key:
     description: 'BlameGPT API key'
@@ -22,4 +24,5 @@ runs:
       env:
         INPUT_COMMAND: ${{ inputs.command }}
         INPUT_ISSUE_ID: ${{ inputs.issue_id }}
+        INPUT_PULL_REQUEST_ID: ${{ inputs.pull_request_id }}
         INPUT_BLAMEGPT_API_KEY: ${{ inputs.blamegpt_api_key }}
