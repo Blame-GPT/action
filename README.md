@@ -5,10 +5,18 @@
   with:
     node-version: '20' # or any
 
+# To find culprit PR for an issue
 - uses: blamegpt/action@v1
   with:
     command: 'blame'
     issue_id: ${{ github.event.issue.number }}
+    blamegpt_api_key: ${{ secrets.BLAMEGPT_API_KEY }}
+
+# To find documentation changes for a PR
+- uses: blamegpt/action@v1
+  with:
+    command: 'ohmydocs'
+    pull_request_id: ${{ github.event.pull.number }}
     blamegpt_api_key: ${{ secrets.BLAMEGPT_API_KEY }}
 ```
 
