@@ -1,6 +1,6 @@
 ## How to install? 
 
-Update readme
+Update readme. 1
 ```yaml
 - uses: actions/setup-node@v4
   with:
