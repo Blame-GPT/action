@@ -1,6 +1,7 @@
 import * as core from '@actions/core';
 import { runBlame } from './handlers/blame';
 import { runOhMyDocs } from './handlers/ohMyDocs';
+import { runRevertCulpritPR } from './handlers/revertPr';
 import { COMMANDS_AVAILABLE } from './constants';
 
 async function run() {
@@ -24,6 +25,11 @@ async function run() {
     return;
   }
 
+    if (command === 'revertPr' && !pullRequestID) {
+    core.setFailed('pull_request_id is required for revertPr command.');
+    return;
+  }
+
   if (!apiKey) {
     core.setFailed('blamegpt_api_key is required.');
     return;
@@ -38,6 +44,8 @@ async function run() {
       case 'ohmydocs':
         await runOhMyDocs(issueID, apiKey);
         break;
+      case 'revertPr':
+        await runRevertCulpritPR(pullRequestID, apiKey)
       default:
         core.setFailed(
           `Unsupported command: ${command}. The commands  available are: ${COMMANDS_AVAILABLE.join(
