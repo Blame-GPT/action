@@ -2,10 +2,7 @@ import axios from "axios";
 import * as core from "@actions/core";
 import { REVERT_CULPRIT_PR_ENDPOINT } from "../constants";
 
-export async function runRevertCulpritPR(
-  pullRequestID: string,
-  apiKey: string
-) {
+export async function runRevert(pullRequestID: string, apiKey: string) {
   const response = await axios.post(
     REVERT_CULPRIT_PR_ENDPOINT,
     { pull_request_id: parseInt(pullRequestID) },

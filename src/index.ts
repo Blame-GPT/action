@@ -1,7 +1,7 @@
 import * as core from '@actions/core';
 import { runBlame } from './handlers/blame';
 import { runOhMyDocs } from './handlers/ohMyDocs';
-import { runRevertCulpritPR } from './handlers/revertPr';
+import { runRevert } from './handlers/revertPr';
 import { COMMANDS_AVAILABLE } from './constants';
 
 async function run() {
@@ -45,7 +45,7 @@ async function run() {
         await runOhMyDocs(issueID, apiKey);
         break;
       case 'revertCulpritPR':
-        await runRevertCulpritPR(pullRequestID, apiKey)
+        await runRevert(pullRequestID, apiKey)
       default:
         core.setFailed(
           `Unsupported command: ${command}. The commands  available are: ${COMMANDS_AVAILABLE.join(
