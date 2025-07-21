@@ -25,7 +25,7 @@ async function run() {
     return;
   }
 
-    if (command === 'revertPr' && !pullRequestID) {
+    if (command === 'revertCulpritPR' && !pullRequestID) {
     core.setFailed('pull_request_id is required for revertPr command.');
     return;
   }
@@ -44,7 +44,7 @@ async function run() {
       case 'ohmydocs':
         await runOhMyDocs(issueID, apiKey);
         break;
-      case 'revertPr':
+      case 'revertCulpritPR':
         await runRevertCulpritPR(pullRequestID, apiKey)
       default:
         core.setFailed(
