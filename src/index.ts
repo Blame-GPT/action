@@ -1,7 +1,7 @@
 import * as core from '@actions/core';
 import { runBlame } from './handlers/blame';
 import { runOhMyDocs } from './handlers/ohMyDocs';
-import { runRevert } from './handlers/revertPr';
+import { runRevert } from './handlers/revert';
 import { COMMANDS_AVAILABLE } from './constants';
 
 async function run() {
@@ -25,7 +25,7 @@ async function run() {
     return;
   }
 
-    if (command === 'revertCulpritPR' && !pullRequestID) {
+  if (command === 'revert' && !pullRequestID) {
     core.setFailed('pull_request_id is required for revertPr command.');
     return;
   }
