@@ -1,6 +1,7 @@
 import * as core from '@actions/core';
 import { runBlame } from './handlers/blame';
 import { runOhMyDocs } from './handlers/ohMyDocs';
+import { runReview } from './handlers/review';
 import { COMMANDS_AVAILABLE } from './constants';
 
 async function run() {
@@ -24,6 +25,11 @@ async function run() {
     return;
   }
 
+  if (command === 'review' && !pullRequestID) {
+    core.setFailed('pull_request_id is required for review command.');
+    return;
+  }
+
   if (!apiKey) {
     core.setFailed('blamegpt_api_key is required.');
     return;
@@ -37,6 +43,9 @@ async function run() {
         break;
       case 'ohmydocs':
         await runOhMyDocs(issueID, apiKey);
+        break;
+      case 'review':
+        await runReview(pullRequestID, apiKey);
         break;
       default:
         core.setFailed(

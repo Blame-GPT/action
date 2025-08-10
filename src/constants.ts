@@ -1,3 +1,4 @@
 export const BLAME_ENDPOINT = 'https://blamegpt.rushat.dev/api/blame';
 export const OHMYDOCS_ENDPOINT = 'https://blamegpt.rushat.dev/api/ohmydocs';
-export const COMMANDS_AVAILABLE = ['blame', 'ohmydocs'] as const;
+export const REVIEW_ENDPOINT = 'https://blamegpt.rushat.dev/api/review';
+export const COMMANDS_AVAILABLE = ['blame', 'ohmydocs', 'review'] as const;
