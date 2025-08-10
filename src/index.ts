@@ -11,7 +11,7 @@ async function run() {
   const issueID = core.getInput('issue_id');
   const pullRequestID = core.getInput('pull_request_id');
   const apiKey = core.getInput('blamegpt_api_key');
-  
+
   const repoOwner = github.context.repo.owner;
   const repoName = github.context.repo.repo;
 
@@ -52,7 +52,7 @@ async function run() {
         await runBlame(issueID, apiKey, repoOwner, repoName);
         break;
       case 'ohmydocs':
-        await runOhMyDocs(issueID, apiKey, repoOwner, repoName);
+        await runOhMyDocs(pullRequestID, apiKey, repoOwner, repoName);
         break;
       case 'review':
         await runReview(pullRequestID, apiKey, repoOwner, repoName);
