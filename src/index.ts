@@ -1,4 +1,5 @@
 import * as core from '@actions/core';
+import * as github from '@actions/github';
 import { runBlame } from './handlers/blame';
 import { runOhMyDocs } from './handlers/ohMyDocs';
 import { runReview } from './handlers/review';
@@ -10,6 +11,9 @@ async function run() {
   const issueID = core.getInput('issue_id');
   const pullRequestID = core.getInput('pull_request_id');
   const apiKey = core.getInput('blamegpt_api_key');
+  
+  const repoOwner = github.context.repo.owner;
+  const repoName = github.context.repo.repo;
 
   if (!command) {
     core.setFailed('command is required.');
@@ -45,16 +49,16 @@ async function run() {
   try {
     switch (command) {
       case 'blame':
-        await runBlame(issueID, apiKey);
+        await runBlame(issueID, apiKey, repoOwner, repoName);
         break;
       case 'ohmydocs':
-        await runOhMyDocs(issueID, apiKey);
+        await runOhMyDocs(issueID, apiKey, repoOwner, repoName);
         break;
       case 'review':
-        await runReview(pullRequestID, apiKey);
+        await runReview(pullRequestID, apiKey, repoOwner, repoName);
         break;
       case 'revert':
-        await runRevert(pullRequestID, apiKey);
+        await runRevert(pullRequestID, apiKey, repoOwner, repoName);
         break;
       default:
         core.setFailed(

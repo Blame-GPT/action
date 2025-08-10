@@ -2,10 +2,14 @@ import axios from 'axios';
 import * as core from '@actions/core';
 import { OHMYDOCS_ENDPOINT } from '../constants';
 
-export async function runOhMyDocs(pullRequestID: string, apiKey: string) {
+export async function runOhMyDocs(pullRequestID: string, apiKey: string, repoOwner: string, repoName: string) {
   const response = await axios.post(
     OHMYDOCS_ENDPOINT,
-    { pull_request_id: parseInt(pullRequestID) },
+    { 
+      pull_request_id: parseInt(pullRequestID),
+      repo_owner: repoOwner,
+      repo_name: repoName
+    },
     {
       responseType: 'stream',
       headers: {
