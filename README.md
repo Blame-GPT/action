@@ -12,6 +12,13 @@
     issue_id: ${{ github.event.issue.number }}
     blamegpt_api_key: ${{ secrets.BLAMEGPT_API_KEY }}
 
+# To review a PR and catch bugs before they happen
+- uses: blamegpt/action@v1
+  with:
+    command: 'review'
+    pull_request_id: ${{ github.event.pull.number }}
+    blamegpt_api_key: ${{ secrets.BLAMEGPT_API_KEY }}
+
 # To find documentation changes for a PR
 - uses: blamegpt/action@v1
   with:
@@ -19,6 +26,10 @@
     pull_request_id: ${{ github.event.pull.number }}
     blamegpt_api_key: ${{ secrets.BLAMEGPT_API_KEY }}
 ```
+
+## Reviewing PRs to catch bugs before they happen
+
+This tool helps review pull requests and identify potential issues before they make it to production, saving you time and preventing issues.
 
 ## Why is my shiny new feature not on production yet?
 

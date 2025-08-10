@@ -4,7 +4,7 @@ icon: 'check-circle'
 color: 'purple'
 inputs:
   command:
-    description: 'Command to run ["blame", "ohmydocs", "revert"]'
+    description: 'Command to run ["blame", "ohmydocs", "review", "revert"]'
     required: true
   issue_id:
     description: 'GitHub issue number to find the culprit PR for.'

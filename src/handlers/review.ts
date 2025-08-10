@@ -1,12 +1,12 @@
 import axios from 'axios';
 import * as core from '@actions/core';
-import { BLAME_ENDPOINT } from '../constants';
+import { REVIEW_ENDPOINT } from '../constants';
 
-export async function runBlame(issueID: string, apiKey: string, repoOwner: string, repoName: string) {
+export async function runReview(pullRequestID: string, apiKey: string, repoOwner: string, repoName: string) {
   const response = await axios.post(
-    BLAME_ENDPOINT,
+    REVIEW_ENDPOINT,
     { 
-      issue_id: parseInt(issueID),
+      pull_request_id: parseInt(pullRequestID),
       repo_owner: repoOwner,
       repo_name: repoName
     },
