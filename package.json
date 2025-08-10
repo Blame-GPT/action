@@ -1,6 +1,6 @@
 {
   "name": "blamegpt",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "GitHub Action to run BlameGPT on issues.",
   "main": "dist/index.js",
   "scripts": {
